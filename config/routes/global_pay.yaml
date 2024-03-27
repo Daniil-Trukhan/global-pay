@@ -1,0 +1,6 @@
+global_pay_controllers:
+  resource:
+    path: '@GlobalPayBundle/src/Controller/'
+    namespace: Daniil\GlobalPay\Controller
+  type: attribute
+  prefix: global_pay
