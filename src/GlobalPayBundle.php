@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace Daniil\GlobalPay;
 
 use Daniil\GlobalPay\DependencyInjection\GlobalPayExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
