@@ -1,0 +1,20 @@
+parameters:
+  global_pay_url: '%env(GLOBAL_PAY_URL)%'
+  global_pay_auth_url: '%env(GLOBAL_PAY_AUTH_URL)%'
+  global_pay_service_id: '%env(GLOBAL_PAY_SERVICE_ID)%'
+  global_pay_client_id: '%env(GLOBAL_PAY_CLIENT_ID)%'
+  global_pay_grant_type: '%env(GLOBAL_PAY_GRANT_TYPE)%'
+  global_pay_scope: '%env(GLOBAL_PAY_SCOPE)%'
+  global_pay_client_secret: '%env(GLOBAL_PAY_CLIENT_SECRET)%'
+  global_pay_username: '%env(GLOBAL_PAY_USERNAME)%'
+  global_pay_password: '%env(GLOBAL_PAY_PASSWORD)%'
+
+services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  Daniil\GlobalPay\:
+    resource: '../../'
+    exclude:
+      - '../../DependencyInjection/'

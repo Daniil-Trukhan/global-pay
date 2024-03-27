@@ -1,0 +1,51 @@
+{
+  "name": "wildan99/global-pay",
+  "description": "GlobalPay bundle",
+  "type": "symfony-bundle",
+  "require": {
+    "php": ">=8.2",
+    "doctrine/annotations": "^1.13",
+    "doctrine/doctrine-bundle": "^2.5",
+    "doctrine/doctrine-migrations-bundle": "^3.2",
+    "doctrine/orm": "^2.11",
+    "symfony/framework-bundle": "^7.0",
+    "symfony/security-bundle": "^7.0",
+    "symfony/http-client": "^7.0",
+    "symfony/dotenv": "^7.0",
+    "symfony/validator": "^7.0",
+    "ramsey/collection": "*",
+    "ramsey/uuid": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10",
+    "psalm/plugin-symfony": "*",
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "*",
+    "symfony/phpunit-bridge": "^7.0",
+    "vimeo/psalm": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Daniil\\GlobalPay\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Daniil\\GlobalPay\\Tests\\": "tests/"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Daniil Trukhan",
+      "email": "truh.daniil@gmail.com"
+    }
+  ],
+  "scripts": {
+    "psalm": "vendor/bin/psalm --config=psalm.xml",
+    "psalter": "vendor/bin/psalter --issues=InvalidReturnType,MissingReturnType,MissingParamType",
+    "phpcs": "./vendor/bin/phpcs --standard=phpcs.xml src/ tests/",
+    "fix": "./vendor/bin/phpcbf src/ tests/",
+    "lint-all": "composer phpcs && composer psalm"
+  }
+}
