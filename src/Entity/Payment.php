@@ -8,22 +8,9 @@ use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Daniil\GlobalPay\Enum\Status;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'payment')]
-//#[ApiResource(
-//    operations: [
-//        new Get(
-//            requirements: ['id' => '\d+'],
-//            security: "object.getPayer() == user or is_granted('ROLE_ADMIN')",
-//        ),
-//           new GetCollection(
-//            normalizationContext: ['groups' => ['payments:read']],
-//            security: "is_granted('ROLE_ADMIN')",
-//        ),
-//    ],
-//)]
 class Payment
 {
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -37,8 +24,8 @@ class Payment
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    #[ORM\ManyToOne]
-    private UserInterface $payer;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $payer;
     #[ORM\Column(type: Types::STRING, enumType: Status::class)]
     private Status $status;
     #[ORM\Column(type: Types::INTEGER)]
@@ -66,7 +53,7 @@ class Payment
         return $this->id;
     }
 
-    public function getPayer(): UserInterface
+    public function getPayer(): ?string
     {
         return $this->payer;
     }
@@ -110,7 +97,7 @@ class Payment
         return $this;
     }
 
-    public function setPayer(UserInterface $payer): Payment
+    public function setPayer(?string $payer): Payment
     {
         $this->payer = $payer;
         return $this;

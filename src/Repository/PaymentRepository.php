@@ -7,7 +7,6 @@ namespace Daniil\GlobalPay\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Daniil\GlobalPay\Entity\Payment;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Payment>
@@ -24,11 +23,11 @@ final class PaymentRepository extends ServiceEntityRepository
         parent::__construct($registry, Payment::class);
     }
 
-    public function findMy(UserInterface $user): array
+    public function findMy(string $payer): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.payer = :user')
-            ->setParameter('user', $user)
+            ->andWhere('c.payer = :payer')
+            ->setParameter('payer', $payer)
             ->orderBy('c.id', 'DESC')
             ->getQuery()
             ->getResult();

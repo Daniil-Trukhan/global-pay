@@ -6,7 +6,6 @@ namespace Daniil\GlobalPay\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Daniil\GlobalPay\Entity\Card;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class CardRepository
@@ -23,11 +22,11 @@ final class CardRepository extends ServiceEntityRepository
     /**
      * @return Card[] Returns an array of Card objects
      */
-    public function findMy(UserInterface $user): array
+    public function findMy(string $owner): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.owner = :user')
-            ->setParameter('user', $user)
+            ->andWhere('c.owner = :owner')
+            ->setParameter('owner', $owner)
             ->orderBy('c.id', 'ASC')
             ->getQuery()
             ->getResult();

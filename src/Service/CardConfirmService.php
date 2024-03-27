@@ -10,7 +10,6 @@ use Daniil\GlobalPay\Component\Card\CardConfirmDto;
 use Daniil\GlobalPay\Entity\Card;
 use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Repository\CardRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class CardBindService
@@ -28,18 +27,16 @@ final readonly class CardConfirmService
     /**
      * @param CardConfirmDto $dto
      * @return Card
-     * @throws GlobalPayException
      */
-    public function __invoke(CardConfirmDto $dto, UserInterface $user): Card
+    public function __invoke(CardConfirmDto $dto): Card
     {
         $globalResp = ($this->confirmClient)(new CardConfirmRequest(cardToken: $dto->cardToken, code: $dto->code));
 
         $card = (new Card())
             ->setCardNumber($globalResp->getCardNumber())
             ->setCreatedAt(new DateTime())
-            ->setCreatedBy($user)
             ->setBalance($globalResp->getBalance())
-            ->setOwner($user)
+            ->setOwner($globalResp->getHolderFullName())
             ->setBankName($globalResp->getBankName())
             ->setToken($globalResp->getToken())
             ->setExpiryDate($globalResp->getExpiryDate())

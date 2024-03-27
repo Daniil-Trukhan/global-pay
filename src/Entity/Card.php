@@ -8,7 +8,6 @@ use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Daniil\GlobalPay\Enum\ProcessingType;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity]
 class Card
@@ -18,7 +17,7 @@ class Card
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
     private ?int $balance;
     /** Наименование банка, выпустившего карту и производящий ее обслуживание */
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $bankName;
     /** Номер карты «под маской» */
     #[ORM\Column(type: Types::TEXT, nullable: false)]
@@ -35,9 +34,8 @@ class Card
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private UserInterface $owner;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $owner;
     /** Тип карты в рамках процессингового центра (UZCARD, HUMO, VM) */
     #[ORM\Column(type: Types::TEXT, nullable: true, enumType: ProcessingType::class)]
     private ?ProcessingType $processingType;
@@ -80,7 +78,7 @@ class Card
         return $this->id;
     }
 
-    public function getOwner(): UserInterface
+    public function getOwner(): ?string
     {
         return $this->owner;
     }
@@ -137,7 +135,7 @@ class Card
         return $this;
     }
 
-    public function setOwner(UserInterface $owner): Card
+    public function setOwner(?string $owner): Card
     {
         $this->owner = $owner;
         return $this;
