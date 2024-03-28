@@ -8,6 +8,10 @@ use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Service\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 /**
@@ -20,7 +24,14 @@ final class PaymentPerformClient extends Client
     private const PATH = '/payments/v1/payment/perform';
 
     /**
+     * @param PaymentPerformRequest $request
+     * @return PaymentResponse
      * @throws GlobalPayException
+     * @throws TransportExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
      */
     public function __invoke(PaymentPerformRequest $request): PaymentResponse
     {

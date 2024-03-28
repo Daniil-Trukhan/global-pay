@@ -9,6 +9,11 @@ use Daniil\GlobalPay\Action\Card\Bind\CardBindRequest;
 use Daniil\GlobalPay\Component\Card\CardBindDto;
 use Daniil\GlobalPay\Component\Card\CardBindResponseDto;
 use Daniil\GlobalPay\Exception\GlobalPayException;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 /**
  * Class CardBindService
@@ -22,7 +27,14 @@ final readonly class CardBindService
     }
 
     /**
+     * @param CardBindDto $dto
+     * @return CardBindResponseDto
      * @throws GlobalPayException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function __invoke(CardBindDto $dto): CardBindResponseDto
     {

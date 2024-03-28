@@ -10,6 +10,11 @@ use Daniil\GlobalPay\Component\Card\CardConfirmDto;
 use Daniil\GlobalPay\Entity\Card;
 use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Repository\CardRepository;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 /**
  * Class CardBindService
@@ -27,6 +32,12 @@ final readonly class CardConfirmService
     /**
      * @param CardConfirmDto $dto
      * @return Card
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws GlobalPayException
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function __invoke(CardConfirmDto $dto): Card
     {

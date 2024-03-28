@@ -9,6 +9,10 @@ use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Service\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 /**
@@ -21,7 +25,14 @@ final class CheckStatusClient extends Client
     private const PATH = '/payments/v1/payment/';
 
     /**
+     * @param CheckStatusRequest $request
+     * @return PaymentResponse
      * @throws GlobalPayException
+     * @throws TransportExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
      */
     public function __invoke(CheckStatusRequest $request): PaymentResponse
     {

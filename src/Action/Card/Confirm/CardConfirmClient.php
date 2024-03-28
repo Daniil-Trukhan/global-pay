@@ -30,6 +30,7 @@ final class CardConfirmClient extends Client
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
+     * @throws \JsonException
      */
     public function __invoke(CardConfirmRequest $request): CardConfirmResponse
     {
@@ -48,7 +49,7 @@ final class CardConfirmClient extends Client
         }
 
         if ($code !== Response::HTTP_OK) {
-            throw new GlobalPayException(json_decode($response->getContent(), false)->detail);
+            throw new GlobalPayException(json_decode($response->getContent(), false, 512, JSON_THROW_ON_ERROR)->detail);
         }
 
         return new CardConfirmResponse($response->toArray());

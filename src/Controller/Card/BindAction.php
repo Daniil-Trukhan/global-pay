@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Daniil\GlobalPay\Controller\Card;
 
 use Daniil\GlobalPay\Component\Card\CardBindDto;
-use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Service\CardBindService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use OpenApi\Attributes as OA;
+use Throwable;
 
 /**
  * Class BindAction
@@ -43,7 +43,7 @@ final class BindAction extends AbstractController
     {
         try {
             return new JsonResponse($service($dto));
-        } catch (GlobalPayException) {
+        } catch (Throwable) {
             return new JsonResponse('Something is wrong', Response::HTTP_BAD_REQUEST);
         }
     }

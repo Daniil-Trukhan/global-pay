@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Daniil\GlobalPay\Service;
 
+use Daniil\GlobalPay\Repository\CardRepository;
 use DateTime;
 use JsonException;
 use Daniil\GlobalPay\Action\Payment\Init\PaymentInitClient;
@@ -14,6 +15,12 @@ use Daniil\GlobalPay\Entity\Payment;
 use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Repository\PaymentRepository;
 use Ramsey\Uuid\Uuid;
+use RuntimeException;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 /**
  * Class PaymentMakeService
@@ -26,12 +33,20 @@ final readonly class PaymentMakeService
         private PaymentInitClient     $initClient,
         private PaymentPerformClient  $performClient,
         private PaymentRepository  $repository,
+        private CardRepository  $cardRepository
     ) {
     }
 
     /**
-     * @throws JsonException
+     * @param PaymentMakeDto $dto
+     * @return Payment
      * @throws GlobalPayException
+     * @throws JsonException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function __invoke(PaymentMakeDto $dto): Payment
     {
@@ -44,18 +59,23 @@ final readonly class PaymentMakeService
             sum: $dto->sum * 100 // перевод в тиины
         ));
 
+        $card = $this->cardRepository->find($dto->cardId);
+        if ($card === null) {
+            throw new RuntimeException('Card not found');
+        }
+
         $performResponse = ($this->performClient)(
             new PaymentPerformRequest(
                 externalId: $initResponse->getExternalId(),
                 id: $initResponse->getId(),
-                cardToken: $dto->card->getToken()
+                cardToken: $card->getToken()
             )
         );
 
         $payment = (new Payment())
             ->setCreatedAt(new DateTime())
             ->setSum($dto->sum)
-            ->setPayer($dto->card->getOwner())
+            ->setPayer($card->getOwner())
             ->setExternalId($performResponse->getExternalId())
             ->setStatus($performResponse->getStatus())
             ->setTransactionId($performResponse->getId())

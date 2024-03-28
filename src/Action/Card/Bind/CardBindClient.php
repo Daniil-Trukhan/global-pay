@@ -24,10 +24,14 @@ final class CardBindClient extends Client
     private const PATH = '/cards/v1/card';
 
     /**
+     * @param CardBindRequest $request
+     * @return CardBindResponse
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
      * @throws GlobalPayException
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function __invoke(CardBindRequest $request): CardBindResponse
     {
