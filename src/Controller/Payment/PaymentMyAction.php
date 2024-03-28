@@ -5,8 +5,11 @@ namespace Daniil\GlobalPay\Controller\Payment;
 
 use Daniil\GlobalPay\Repository\PaymentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
+use OpenApi\Attributes as OA;
 
 /**
  * Class PaymentMyAction
@@ -17,8 +20,27 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PaymentMyAction extends AbstractController
 {
     #[Route('/payment/my', name: 'payment_my', methods: ['GET'])]
-    public function __invoke(PaymentRepository $repository): array
+    #[OA\Get(
+        path: '/payment/my',
+        summary: 'Get my payments',
+        tags: ['Payment'],
+        responses: [
+            new OA\Response(
+                response: Response::HTTP_OK,
+                description: 'Get my payments',
+                content: new OA\JsonContent(
+                    type: 'array',
+                    items: new OA\Items(ref: '#/components/schemas/Payment')
+                )
+            )
+        ]
+    )
+    ]
+    public function __invoke(PaymentRepository $repository): JsonResponse
     {
-        return $repository->findMy($this->getUser());
+        $user = $this->getUser();
+        return $user !== null ?
+            new JsonResponse($repository->findMy($user->getUserIdentifier())) :
+            new JsonResponse([]);
     }
 }

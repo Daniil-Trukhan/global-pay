@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  title: 'Global Pay API'
+  description: 'Global Pay API'
+  version: '0.1'
+paths:
+  /cards/bind:
+    post:
+      tags:
+        - Card
+      summary: 'Bind card'
+      operationId: bindCard
+      requestBody:
+        $ref: '#/components/requestBodies/CardBindDto'
+      responses:
+        '200':
+          $ref: '#/components/schemas/CardBindResponseDto'
+  /cards/confirm:
+    post:
+      tags:
+        - Card
+      summary: 'Confirm card'
+      description: 'Confirm card'
+      operationId: confirmCard
+      requestBody:
+        $ref: '#/components/requestBodies/CardConfirmDto'
+      responses:
+        '200':
+          $ref: '#/components/schemas/Card'
+        '400':
+          description: 'Bad request'
+  /cards/my:
+    get:
+      tags:
+        - Card
+      summary: 'Get my cards'
+      operationId: 75be41c7865955f844367b7a32b1789a
+      responses:
+        '200':
+          description: 'Get my card'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
+  /payment/make:
+    post:
+      tags:
+        - Payment
+      summary: 'Make payment'
+      operationId: paymentMake
+      requestBody:
+        $ref: '#/components/requestBodies/PaymentMakeDto'
+      responses:
+        '200':
+          $ref: '#/components/schemas/Payment'
+        '400':
+          description: 'Bad request'
+  /payment/my:
+    get:
+      tags:
+        - Payment
+      summary: 'Get my payments'
+      operationId: b71e3e71bd50ce05ad15010f342ea7b0
+      responses:
+        '200':
+          description: 'Get my payments'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+components:
+  schemas:
+    CardBindResponseDto:
+      title: 'Card Bind Response Dto'
+      description: 'Card Bind Response Dto'
+      properties:
+        cardToken:
+          title: 'Card Token'
+          description: 'Card Token'
+          type: string
+          format: string
+        smsNotificationNumber:
+          title: 'SMS Notification Number'
+          description: 'SMS Notification Number'
+          type: string
+          format: string
+      type: object
+    Card:
+      title: 'Card model'
+      description: 'Card model'
+      properties:
+        balance:
+          title: Balance
+          description: Balance
+          type: integer
+          format: int64
+          nullable: true
+        bankName:
+          title: 'Bank name'
+          description: 'Bank name'
+          type: string
+          format: string
+          nullable: true
+        cardNumber:
+          title: Number
+          description: Number
+          type: string
+          format: string
+        expiryDate:
+          title: 'Expiry date'
+          description: 'Expiry date'
+          type: string
+          format: string
+          nullable: true
+        holderFullName:
+          title: 'Holder full name'
+          description: 'Holder full name'
+          type: string
+          format: string
+          nullable: true
+        id:
+          title: ID
+          description: ID
+          type: integer
+          format: int64
+          nullable: true
+        processingType:
+          title: 'Processing type'
+          description: 'Processing type'
+          format: string
+          enum:
+            - HUMO
+            - VM
+            - UZCARD
+          nullable: true
+        token:
+          title: token
+          description: token
+          type: string
+          format: string
+          nullable: true
+      type: object
+    Payment:
+      title: 'Payment model'
+      description: 'Payment model'
+      properties:
+        bankResponse:
+          title: 'Bank response'
+          description: 'Bank response'
+          type: string
+          format: string
+          nullable: true
+        createdAt:
+          title: 'Created date'
+          description: 'Created date'
+          type: string
+          format: datetime
+        externalId:
+          title: 'External Id'
+          description: 'External Id'
+          type: string
+          format: string
+          nullable: true
+        id:
+          title: ID
+          description: ID
+          type: integer
+          format: int64
+          nullable: true
+        payer:
+          title: Payer
+          description: Payer
+          type: string
+          format: string
+          nullable: true
+        status:
+          title: Status
+          description: Status
+          format: string
+          enum:
+            - INIT
+            - VALIDATE
+            - APPROVED
+            - PARTIAL_REVERT
+            - REVERT
+            - FAILED
+            - NEED_REVERT
+        sum:
+          title: Sum
+          description: Sum
+          type: integer
+          format: int64
+        transactionId:
+          title: 'Transaction Id'
+          description: 'Transaction Id'
+          type: string
+          format: string
+          nullable: true
+      type: object
+  requestBodies:
+    CardBindDto:
+      description: 'Card Bind Request'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              cardNumber:
+                title: 'Card Number'
+                description: 'Card Number'
+                format: string
+                example: '1234567890'
+              expiryDate:
+                title: 'Expiry Date'
+                description: 'Expiry Date'
+                format: string
+                example: '2501'
+            type: object
+    CardConfirmDto:
+      description: 'Card Confirm Request'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              cardToken:
+                title: 'Card Token'
+                description: 'Card Token'
+                format: string
+                example: '1234567890'
+              code:
+                title: 'Confirmation Code'
+                description: 'Confirmation code'
+                format: string
+                example: '1234'
+            type: object
+    PaymentMakeDto:
+      description: 'Payment Make Request'
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              cardId:
+                title: 'Card Id'
+                description: 'Card Id'
+                format: int64
+                example: '123'
+              sum:
+                title: Sum
+                description: Sum
+                format: int64
+                example: 10000
+            type: object

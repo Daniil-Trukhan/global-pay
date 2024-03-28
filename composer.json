@@ -22,7 +22,8 @@
     "roave/security-advisories": "dev-latest",
     "squizlabs/php_codesniffer": "*",
     "symfony/phpunit-bridge": "^7.0",
-    "vimeo/psalm": "*"
+    "vimeo/psalm": "*",
+    "zircote/swagger-php": "^4.8"
   },
   "autoload": {
     "psr-4": {

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
+use OpenApi\Attributes as OA;
 
 /**
  * Class ConfirmAction
@@ -23,10 +24,29 @@ final class ConfirmAction extends AbstractController
 {
     /** Confirm card */
     #[Route('/cards/confirm', name: 'cards_confirm', methods: ['POST'])]
+    #[OA\Post(
+        path: '/cards/confirm',
+        operationId: "confirmCard",
+        summary: 'Confirm card',
+        requestBody: new OA\RequestBody(ref: "#/components/requestBodies/CardConfirmDto"),
+        tags: ['Card'],
+        responses: [
+            new OA\Response(
+                ref: '#/components/schemas/Card',
+                response: Response::HTTP_OK,
+                description: 'Card is confirmed'
+            ),
+            new OA\Response(
+                response: Response::HTTP_BAD_REQUEST,
+                description: 'Bad request'
+            )
+        ]
+    )
+    ]
     public function __invoke(CardConfirmDto $dto, CardConfirmService $service): Response
     {
         try {
-            return new JsonResponse($service($dto, $this->getUser()));
+            return new JsonResponse($service($dto));
         } catch (Throwable) {
             return new JsonResponse('Code is wrong', Response::HTTP_BAD_REQUEST);
         }
