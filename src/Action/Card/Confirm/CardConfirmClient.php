@@ -6,6 +6,7 @@ namespace Daniil\GlobalPay\Action\Card\Confirm;
 
 use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Service\Client;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -30,7 +31,7 @@ final class CardConfirmClient extends Client
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function __invoke(CardConfirmRequest $request): CardConfirmResponse
     {

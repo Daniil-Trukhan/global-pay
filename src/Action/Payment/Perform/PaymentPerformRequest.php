@@ -18,7 +18,8 @@ final readonly class PaymentPerformRequest
         private string $id,
         /** Токен карты, в системе «Global Pay» возвращается Мерчанту на этапе подтверждения карты */
         private string $cardToken
-    ) {
+    )
+    {
     }
 
     public function toArray(): array

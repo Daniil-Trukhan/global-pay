@@ -29,15 +29,22 @@ paths:
           $ref: '#/components/schemas/Card'
         '400':
           description: 'Bad request'
-  /cards/my:
+  '/cards/{owner}':
     get:
       tags:
         - Card
-      summary: 'Get my cards'
-      operationId: 75be41c7865955f844367b7a32b1789a
+      summary: 'Get cards'
+      operationId: e4a69343d6fde0c78fd24ca03b8aa515
+      parameters:
+        -
+          name: owner
+          in: query
+          required: true
+          schema:
+            format: string
       responses:
         '200':
-          description: 'Get my card'
+          description: 'Get cards'
           content:
             application/json:
               schema:
@@ -57,15 +64,22 @@ paths:
           $ref: '#/components/schemas/Payment'
         '400':
           description: 'Bad request'
-  /payment/my:
+  '/payment/{payer}':
     get:
       tags:
         - Payment
-      summary: 'Get my payments'
-      operationId: b71e3e71bd50ce05ad15010f342ea7b0
+      summary: 'Get payments'
+      operationId: 5df11f5fb1a562e257df5d70c976e979
+      parameters:
+        -
+          name: payer
+          in: query
+          required: true
+          schema:
+            format: string
       responses:
         '200':
-          description: 'Get my payments'
+          description: 'Get payments'
           content:
             application/json:
               schema:

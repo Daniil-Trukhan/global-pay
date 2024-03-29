@@ -16,6 +16,7 @@ final readonly class CardConfirmRequest
         public string $cardToken,
         /** Код подтверждения. */
         public string $code
-    ) {
+    )
+    {
     }
 }

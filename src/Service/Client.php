@@ -6,7 +6,6 @@ namespace Daniil\GlobalPay\Service;
 
 use Daniil\GlobalPay\Action\Auth\AuthClient;
 use Daniil\GlobalPay\Exception\GlobalPayException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -36,8 +35,9 @@ abstract class Client
     public function __construct(
         protected readonly HttpClientInterface $client,
         private readonly AuthClient            $authClient,
-        ParameterBagInterface                  $config
-    ) {
+        ParameterBagResolver             $config
+    )
+    {
         $this->baseUrl = $config->get('global_pay_url');
         $this->serviceId = $config->get('global_pay_service_id');
         $this->auth();

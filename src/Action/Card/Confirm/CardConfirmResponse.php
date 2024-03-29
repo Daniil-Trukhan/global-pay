@@ -36,7 +36,7 @@ final class CardConfirmResponse
         $this->expiryDate = $data['expiryDate'];
         $this->holderFullName = $data['holderFullName'];
         $this->token = $data['token'];
-        $this->processingType = ProcessingType::tryFrom($data['processingType']);
+        $this->processingType = ProcessingType::from((string)$data['processingType']);
     }
 
     public function getBalance(): int

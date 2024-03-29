@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace Daniil\GlobalPay\Entity;
 
+use Daniil\GlobalPay\Enum\ProcessingType;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Daniil\GlobalPay\Enum\ProcessingType;
 use OpenApi\Attributes as OA;
 
 #[ORM\Entity]
 #[OA\Schema(title: 'Card model', description: 'Card model')]
 class Card
 {
-      
+
     /** Баланс карты на момент её подтверждения */
     #[OA\Property(title: 'Balance', description: 'Balance', format: 'int64')]
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
-    private ?int $balance;
+    private ?int $balance = null;
 
     /** Наименование банка, выпустившего карту и производящий ее обслуживание */
     #[OA\Property(title: 'Bank name', description: 'Bank name', format: 'string')]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $bankName;
+    private ?string $bankName = null;
 
     /** Номер карты «под маской» */
     #[OA\Property(title: 'Number', description: 'Number', format: 'string')]
@@ -36,12 +36,12 @@ class Card
     /** Срок действия карты */
     #[OA\Property(title: 'Expiry date', description: 'Expiry date', format: 'string')]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $expiryDate;
+    private ?string $expiryDate = null;
 
     /** Имя и фамилия владельца карты */
     #[OA\Property(title: 'Holder full name', description: 'Holder full name', format: 'string')]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $holderFullName;
+    private ?string $holderFullName = null;
 
     #[OA\Property(title: 'ID', description: 'ID', format: 'int64')]
     #[ORM\Id]
@@ -49,17 +49,17 @@ class Card
     #[ORM\Column]
     private ?int $id = null;
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $owner;
+    private ?string $owner = null;
 
     /** Тип карты в рамках процессингового центра (UZCARD, HUMO, VM) */
     #[OA\Property(title: 'Processing type', description: 'Processing type', format: 'string', enum: ['HUMO', 'VM', 'UZCARD'])]
     #[ORM\Column(type: Types::STRING, nullable: true, enumType: ProcessingType::class)]
-    private ?ProcessingType $processingType;
+    private ?ProcessingType $processingType = null;
 
     /**  UUID Подтвержденный токен карты в системе «Global Pay» */
     #[OA\Property(title: 'token', description: 'token', format: 'string')]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $token;
+    private ?string $token = null;
 
     public function getBalance(): ?int
     {

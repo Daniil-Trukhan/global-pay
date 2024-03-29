@@ -24,7 +24,7 @@ final class PaymentInitResponse
     {
         $this->id = $data['id'];
         $this->externalId = $data['externalId'];
-        $this->status = Status::tryFrom($data['status']);
+        $this->status = Status::from((string)$data['status']);
     }
 
     public function getExternalId(): string

@@ -14,6 +14,7 @@ final readonly class CheckStatusRequest
     public function __construct(
         /** id платежа */
         public string $paymentId
-    ) {
+    )
+    {
     }
 }

@@ -16,7 +16,8 @@ final readonly class CardBindRequest
         private string $cardNumber,
         /** Срок действия карты в формате «yymm» */
         private string $expiryDate
-    ) {
+    )
+    {
     }
 
     public function toArray(): array

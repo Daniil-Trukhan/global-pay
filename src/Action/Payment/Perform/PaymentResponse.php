@@ -65,8 +65,8 @@ final class PaymentResponse
         $this->externalId = $data['externalId'];
         $this->processingId = $data['processingId'];
         $this->amount = (int)$data['amount'];
-        $this->status = Status::tryFrom($data['status']);
-        $this->processingType = ProcessingType::tryFrom($data['processingType']);
+        $this->status = Status::from((string)$data['status']);
+        $this->processingType = ProcessingType::from((string)$data['processingType']);
         $this->createdAt = $data['createdAt'];
         $this->approvedAt = $data['approvedAt'];
         $this->gnkPerformedAt = $data['gnkPerformedAt'];
@@ -81,29 +81,35 @@ final class PaymentResponse
             $this->mapMerchantPaymentRespFields($data['merchantPaymentRespFields']) : null;
     }
 
-    private function mapPaymentReverts(?array $data): ?PaymentRevertRespDtoCollection
+    private function mapPaymentReverts(?array $data = null): ?PaymentRevertRespDtoCollection
     {
         $result = new PaymentRevertRespDtoCollection();
-        foreach ($data as $item) {
-            $result->add(new PaymentRevertRespDto($item));
+        if (is_array($data)) {
+            foreach ($data as $item) {
+                $result->add(new PaymentRevertRespDto($item));
+            }
         }
         return $result->count() > 0 ? $result : null;
     }
 
-    private function mapPaymentFields(?array $data): ?PaymentFieldRespDtoCollection
+    private function mapPaymentFields(?array $data = null): ?PaymentFieldRespDtoCollection
     {
         $result = new PaymentFieldRespDtoCollection();
-        foreach ($data as $item) {
-            $result->add(new PaymentFieldRespDto($item));
+        if (is_array($data)) {
+            foreach ($data as $item) {
+                $result->add(new PaymentFieldRespDto($item));
+            }
         }
         return $result->count() > 0 ? $result : null;
     }
 
-    private function mapMerchantPaymentRespFields(?array $data): ?MerchantPaymentRespFieldRespDtoCollection
+    private function mapMerchantPaymentRespFields(?array $data = null): ?MerchantPaymentRespFieldRespDtoCollection
     {
         $result = new MerchantPaymentRespFieldRespDtoCollection();
-        foreach ($data as $item) {
-            $result->add(new MerchantPaymentRespFieldRespDto($item));
+        if (is_array($data)) {
+            foreach ($data as $item) {
+                $result->add(new MerchantPaymentRespFieldRespDto($item));
+            }
         }
         return $result->count() > 0 ? $result : null;
     }
@@ -128,7 +134,7 @@ final class PaymentResponse
         return $this->createdAt;
     }
 
-    public function getCustomer(): CustomerRespDto
+    public function getCustomer(): ?CustomerRespDto
     {
         return $this->customer;
     }
@@ -183,7 +189,7 @@ final class PaymentResponse
         return $this->processingType;
     }
 
-    public function getService(): ServiceRespDto
+    public function getService(): ?ServiceRespDto
     {
         return $this->service;
     }

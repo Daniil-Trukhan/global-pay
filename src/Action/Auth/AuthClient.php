@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Daniil\GlobalPay\Action\Auth;
 
 use Daniil\GlobalPay\Exception\GlobalPayException;
+use Daniil\GlobalPay\Service\ParameterBagResolver;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,11 +33,11 @@ final class AuthClient
     private string $scope;
     private string $username;
 
-
     public function __construct(
         protected readonly HttpClientInterface $client,
-        ParameterBagInterface                  $config
-    ) {
+        ParameterBagResolver                  $config
+    )
+    {
         $this->authUrl = $config->get('global_pay_auth_url');
         $this->clientId = $config->get('global_pay_client_id');
         $this->grantType = $config->get('global_pay_grant_type');

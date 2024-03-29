@@ -42,6 +42,7 @@ final class CardBindDto
         public string $cardNumber,
         /** Срок действия карты в формате «yymm» */
         public string $expiryDate
-    ) {
+    )
+    {
     }
 }

@@ -20,6 +20,7 @@ final class CardBindResponseDto
         /** Номер SMS-информирования владельца карты «под маской», на который будет выслан одноразовый OTP-код. */
         #[OA\Property(title: 'SMS Notification Number', description: 'SMS Notification Number', format: 'string')]
         public string $smsNotificationNumber
-    ) {
+    )
+    {
     }
 }

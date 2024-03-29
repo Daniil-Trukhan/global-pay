@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Daniil\GlobalPay\Entity;
 
+use Daniil\GlobalPay\Enum\Status;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Daniil\GlobalPay\Enum\Status;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(title: 'Payment model', description: 'Payment model')]
@@ -17,7 +17,7 @@ class Payment
 {
     #[OA\Property(title: 'Bank response', description: 'Bank response', format: 'string')]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $bankResponse;
+    private ?string $bankResponse = null;
 
     #[OA\Property(
         title: 'Created date',
@@ -31,7 +31,7 @@ class Payment
     #[OA\Property(title: 'External Id', description: 'External Id', format: 'string')]
     #[ORM\ManyToOne]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $externalId;
+    private ?string $externalId = null;
 
     #[OA\Property(title: 'ID', description: 'ID', format: 'int64')]
     #[ORM\Id]
@@ -41,9 +41,9 @@ class Payment
 
     #[OA\Property(title: 'Payer', description: 'Payer', format: 'string')]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $payer;
+    private ?string $payer = null;
 
-    #[OA\Property(title: 'Status', description: 'Status', format: 'string', enum:['INIT', 'VALIDATE','APPROVED','PARTIAL_REVERT', 'REVERT', 'FAILED', 'NEED_REVERT'])]
+    #[OA\Property(title: 'Status', description: 'Status', format: 'string', enum: ['INIT', 'VALIDATE', 'APPROVED', 'PARTIAL_REVERT', 'REVERT', 'FAILED', 'NEED_REVERT'])]
     #[ORM\Column(type: Types::STRING, enumType: Status::class)]
     private Status $status;
 
@@ -53,7 +53,7 @@ class Payment
 
     #[OA\Property(title: 'Transaction Id', description: 'Transaction Id', format: 'string')]
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $transactionId;
+    private ?string $transactionId = null;
 
     public function getBankResponse(): ?string
     {

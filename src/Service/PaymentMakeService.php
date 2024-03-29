@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace Daniil\GlobalPay\Service;
 
-use Daniil\GlobalPay\Repository\CardRepository;
-use DateTime;
-use JsonException;
 use Daniil\GlobalPay\Action\Payment\Init\PaymentInitClient;
 use Daniil\GlobalPay\Action\Payment\Init\PaymentInitRequest;
 use Daniil\GlobalPay\Action\Payment\Perform\PaymentPerformClient;
 use Daniil\GlobalPay\Action\Payment\Perform\PaymentPerformRequest;
 use Daniil\GlobalPay\Component\Payment\PaymentMakeDto;
+use Daniil\GlobalPay\Entity\Card;
 use Daniil\GlobalPay\Entity\Payment;
 use Daniil\GlobalPay\Exception\GlobalPayException;
+use Daniil\GlobalPay\Repository\CardRepository;
 use Daniil\GlobalPay\Repository\PaymentRepository;
+use DateTime;
+use JsonException;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -30,11 +31,12 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 final readonly class PaymentMakeService
 {
     public function __construct(
-        private PaymentInitClient     $initClient,
-        private PaymentPerformClient  $performClient,
-        private PaymentRepository  $repository,
-        private CardRepository  $cardRepository
-    ) {
+        private PaymentInitClient    $initClient,
+        private PaymentPerformClient $performClient,
+        private PaymentRepository    $repository,
+        private CardRepository       $cardRepository
+    )
+    {
     }
 
     /**
@@ -59,6 +61,7 @@ final readonly class PaymentMakeService
             sum: $dto->sum * 100 // перевод в тиины
         ));
 
+        /** @var Card $card */
         $card = $this->cardRepository->find($dto->cardId);
         if ($card === null) {
             throw new RuntimeException('Card not found');

@@ -20,7 +20,7 @@ final class GlobalPayBundle extends Bundle
      */
     public function getContainerExtension(): ?ExtensionInterface
     {
-        if (null === $this->extension) {
+        if (false === $this->extension) {
             $this->extension = new GlobalPayExtension();
         }
         return $this->extension;

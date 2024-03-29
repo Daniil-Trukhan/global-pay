@@ -6,12 +6,12 @@ namespace Daniil\GlobalPay\Controller\Card;
 
 use Daniil\GlobalPay\Component\Card\CardBindDto;
 use Daniil\GlobalPay\Service\CardBindService;
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
-use OpenApi\Attributes as OA;
 use Throwable;
 
 /**

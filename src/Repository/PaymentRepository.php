@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Daniil\GlobalPay\Repository;
 
+use Daniil\GlobalPay\Entity\Payment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Daniil\GlobalPay\Entity\Payment;
 
 /**
  * @extends ServiceEntityRepository<Payment>
@@ -23,7 +23,7 @@ final class PaymentRepository extends ServiceEntityRepository
         parent::__construct($registry, Payment::class);
     }
 
-    public function findMy(string $payer): array
+    public function findByPayer(string $payer): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.payer = :payer')

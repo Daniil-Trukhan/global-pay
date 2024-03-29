@@ -42,7 +42,8 @@ final readonly class PaymentMakeDto
         /** Id карты */
         public int $cardId,
         /** Сумма платежа */
-        public ?int $sum = null,
-    ) {
+        public int $sum
+    )
+    {
     }
 }

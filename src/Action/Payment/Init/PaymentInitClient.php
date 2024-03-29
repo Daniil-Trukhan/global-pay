@@ -6,6 +6,7 @@ namespace Daniil\GlobalPay\Action\Payment\Init;
 
 use Daniil\GlobalPay\Exception\GlobalPayException;
 use Daniil\GlobalPay\Service\Client;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -32,7 +33,7 @@ final class PaymentInitClient extends Client
      * @throws DecodingExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function __invoke(PaymentInitRequest $request): PaymentInitResponse
     {

@@ -11,7 +11,6 @@ use Ramsey\Collection\Collection;
  * Class PaymentFieldRespDtoCollection
  *
  * @extends Collection<PaymentFieldRespDto>
- * @implements IteratorAggregate<PaymentFieldRespDto>
  *
  * @package Daniil\GlobalPay\Action\Payment\CheckStatus
  */

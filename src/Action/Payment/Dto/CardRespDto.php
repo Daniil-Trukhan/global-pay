@@ -35,7 +35,7 @@ final readonly class CardRespDto
         $this->balance = (int)$data['balance'];
         $this->expiryDate = (string)$data['expiryDate'];
         $this->smsNotificationNumber = (string)$data['smsNotificationNumber'];
-        $this->processingType = ProcessingType::tryFrom($data['processingType']);
+        $this->processingType = ProcessingType::from((string)$data['processingType']);
         $this->holderFullName = (string)$data['holderFullName'];
     }
 }

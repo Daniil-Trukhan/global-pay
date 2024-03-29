@@ -16,6 +16,7 @@ final readonly class PaymentInitRequest
         public string $externalId,
         /** Сумма, подлежащая к списанию (указывается сумма в тийнах Республики Узбекистан) */
         public int    $sum
-    ) {
+    )
+    {
     }
 }
